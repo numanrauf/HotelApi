@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using HotelApi.Models;
-using Newtonsoft.Json;
+using HotelApi.Services;
 
 namespace HotelApi.Controllers
 {
@@ -13,18 +11,19 @@ namespace HotelApi.Controllers
     [Route("[controller]")]
     public class HotelsController : ControllerBase
     {
+        private readonly IHotelService _hotelService;
+        public HotelsController(IHotelService hotelService)
+        {
+            _hotelService = hotelService;
+        }
+
+
         [HttpGet]
         public IActionResult GetHotels(int hotelId, DateTime date)
         {
-            List<Root> hotelsList;
-            using (var r = new StreamReader("hotelrates.json"))
-            {
-                var json = r.ReadToEnd();
-                hotelsList = JsonConvert.DeserializeObject<List<Root>>(json);
-            }
 
             var resultOutput = new List<ResultOutput>();
-            foreach (var hotel in hotelsList.Where(hotel => hotel.hotel.hotelID == hotelId))
+            foreach (var hotel in _hotelService.FetchHotels().Where(hotel => hotel.hotel.hotelID == hotelId))
             {
                 var targetRateList = hotel.hotelRates.Where(targetRates => targetRates.targetDay.ToString("MM/dd/yyyy") == date.ToString("MM/dd/yyyy")).ToList();
 
