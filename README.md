@@ -1,14 +1,14 @@
 ## Table of contents
 * [General info](#general-info)
-* [Technologies](#technologies)
+* [Libraries](#Libraries)
 * [Setup](#setup)
 
 ## General info
 HotelApi retrieves hotels and the prices for the specific date mentioned.
 	
-## Technologies
+## Libraries and Framework Used
 Project is created with:
-* Asp.net Core version: 3.1
+* .Net Core version: 3.1
 * NUnit version: 3.12
 * Newtonsoft version: 13.0.1
 	
